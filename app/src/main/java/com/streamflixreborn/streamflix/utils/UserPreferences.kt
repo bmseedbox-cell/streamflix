@@ -30,6 +30,7 @@ object UserPreferences {
     private const val DEFAULT_STREAMINGCOMMUNITY_DOMAIN = "streamingunity.dog"
     private const val DEFAULT_CUEVANA_DOMAIN = "cuevana.gs"
     private const val DEFAULT_POSEIDON_DOMAIN = "www.poseidonhd2.co"
+    private const val DEFAULT_TORRENTIO_URL = "https://torrentio.strem.fun"
 
     const val PROVIDER_URL = "URL"
     const val PROVIDER_LOGO = "LOGO"
@@ -268,6 +269,27 @@ object UserPreferences {
         parentalControlLockedUntilMillis = 0L
         parentalControlHardLocked = false
     }
+
+    // ---- Debrid (Premiumize / Real-Debrid / AllDebrid) --------------------
+    /** "off" | "premiumize" | "realdebrid" | "alldebrid" */
+    var debridService: String
+        get() = Key.DEBRID_SERVICE.getString() ?: "off"
+        set(value) {
+            Key.DEBRID_SERVICE.setString(value)
+        }
+
+    var debridApiKey: String
+        get() = Key.DEBRID_API_KEY.getString() ?: ""
+        set(value) {
+            Key.DEBRID_API_KEY.setString(value)
+        }
+
+    var torrentioBaseUrl: String
+        get() = Key.TORRENTIO_BASE_URL.getString()?.ifBlank { DEFAULT_TORRENTIO_URL }
+            ?: DEFAULT_TORRENTIO_URL
+        set(value) {
+            Key.TORRENTIO_BASE_URL.setString(value)
+        }
 
     var subdlApiKey: String
         get() = Key.SUBDL_API_KEY.getString() ?: ""
@@ -515,6 +537,9 @@ object UserPreferences {
         IMMERSIVE_MODE,
         TMDB_API_KEY,
         SUBDL_API_KEY,
+        DEBRID_SERVICE,
+        DEBRID_API_KEY,
+        TORRENTIO_BASE_URL,
         FORCE_EXTRA_BUFFERING,
         AUTOPLAY_BUFFER,
         SERVER_AUTO_SUBTITLES_DISABLED,
